@@ -1,8 +1,13 @@
+import { Header } from "../../components/header/header";
+
 export function AddProduct()
 {
+    
+
     return(
         <>
-            <h1>Add Product</h1>
+            <Header title="Product Add" value ="SAVE" context="CANCEL" isLink={false} isDelete={false} />
+            
         </>
     )
 }

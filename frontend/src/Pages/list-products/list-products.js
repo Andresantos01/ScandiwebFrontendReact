@@ -1,9 +1,10 @@
+import { Header } from "../../components/header/header";
 
 export function ListProducts()
 {
     return(
         <>
-            <h1>List Products</h1>
+           <Header title="Product List" value ="ADD" context="MASS DELETE" />
         </>
     )
 }
