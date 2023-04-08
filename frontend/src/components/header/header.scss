@@ -2,7 +2,7 @@ $bg-primary: rgb(34, 204, 190);
 $btn-color: #000;
 header{
     width: 100%;
-    height: auto;
+    height: 120px;
     padding: 3% 0 1% 0;
     background-color: $bg-primary;
         .center{
@@ -50,4 +50,6 @@ header{
                 }
         }
 }
+
+
 
