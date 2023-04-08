@@ -27,7 +27,7 @@ header{
                     align-items: center;
                     button{
                         height: 35px;
-                        background-color: rgb(255, 255, 255);
+                        background-color: rgb(249, 253, 254);
                         color: $btn-color;
                         border-radius: 4px;
                         padding: 0 3%;
@@ -43,9 +43,16 @@ header{
                                 text-decoration: none;
                             }
                 
-                    }
-                    button:hover{
-                        background-color: #ececec;
+                        &:hover{
+                            background-color: #ececec;
+                        }
+                        &:nth-last-child(1):hover{
+                            background-color: #b43c3c;
+                        }
+                        &:nth-last-child(1){
+                            background-color: #ff1c1c;
+                            color: #fff;
+                        }
                     }
                 }
         }

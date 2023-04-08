@@ -9,6 +9,14 @@ export function ListProducts() {
         { sku: '002', name: 'Product 2', price: 20.0, size: 'L' },
         { sku: '003', name: 'Product 3', price: 30.0, size: 'S' },
         { sku: '004', name: 'Product 4', price: 40.0, size: 'XL' },
+        { sku: '001', name: 'Product 1', price: 10.0, size: 'M' },
+        { sku: '002', name: 'Product 2', price: 20.0, size: 'L' },
+        { sku: '003', name: 'Product 3', price: 30.0, size: 'S' },
+        { sku: '004', name: 'Product 4', price: 40.0, size: 'XL' },
+        { sku: '001', name: 'Product 1', price: 10.0, size: 'M' },
+        { sku: '002', name: 'Product 2', price: 20.0, size: 'L' },
+        { sku: '003', name: 'Product 3', price: 30.0, size: 'S' },
+        { sku: '004', name: 'Product 4', price: 40.0, size: 'XL' },
        
       ];
 
