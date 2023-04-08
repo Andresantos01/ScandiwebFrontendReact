@@ -1,7 +1,7 @@
 import './App.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ListProducts } from './Pages/ListProducts/list-products';
-import { AddProduct } from './Pages/AddProducts/add-products';
+import { ListProducts } from './Pages/list-products/list-products';
+import { AddProduct } from './Pages/add-products/add-products';
 
 function App() {
   return (
