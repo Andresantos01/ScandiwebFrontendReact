@@ -28,7 +28,7 @@ export function Header({ title, value, context, isLink = true, isDelete = true }
                             <button onClick={handleProductFormSubmit}>{value}</button>
                         )}
                         {isDelete ? (
-                            <button onClick={handleDeleteMassCheckbox}>{context}</button>
+                            <button id='delete-product-btn' onClick={handleDeleteMassCheckbox}>{context}</button>
                         ) : (
                             <button onClick={handleCancelProduct}>{context}</button>
                         )}
