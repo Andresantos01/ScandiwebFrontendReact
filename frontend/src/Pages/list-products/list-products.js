@@ -65,11 +65,11 @@ export function ListProducts() {
             'Content-Type': 'application/json'
           }
         });
-        console.log(`Produto ${id} excluído com sucesso!`);
       } catch (error) {
-        setDeleteProductError("Error deleting ids");
+        setDeleteProductError("Error deleting id");
       }
     }
+    setSelectedProducts([]);
     setDeleteSuccess(true);
   }
 

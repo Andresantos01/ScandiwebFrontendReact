@@ -30,7 +30,8 @@ export function AddProduct() {
     const [heightMessage, setHeightMessage] = useState("");
     const [widthMessage, setWidthMessage] = useState("");
     const [lengthMessage, setLengthMessage] = useState("");
-
+    const [errorSaveProduct, setErrorSaveProduct] = useState("");
+    const [skuUniqueMessage, setSkuUniqueMessage] = useState("");
     const handleSelectOption = (event) => {
         setSelectedOption(event.target.value);
         if (event.target.value === "dvd") {
@@ -47,6 +48,7 @@ export function AddProduct() {
             setShowFurnitureFields(true);
         }
     };
+
 
     function handleSubmitForm(event) {
         event.preventDefault();
@@ -74,11 +76,35 @@ export function AddProduct() {
             }
         }
 
+        handleSaveProduct();
 
-
-        // console.log([sku, name, price, selectedOption, size, weight, height, width, length]);
     }
 
+    async function handleSaveProduct() {
+        try {
+            const modifiedProduct = {
+                weight: `${weight} Kg`,
+                size: ` ${size} MB`,
+                dimension: `${height}x${width}x${length}`
+            }
+            await axios.post(`http://localhost:8000/addProduct`, {
+                sku: sku,
+                name: name,
+                price: price,
+                type: selectedOption,
+                ...(selectedOption === 'book' && { weight: modifiedProduct.weight }),
+                ...(selectedOption === 'dvd' && { size: modifiedProduct.size }),
+                ...(selectedOption === 'furniture' && { dimension: modifiedProduct.dimension })
+            }).then(response => {
+                response.data.error_message ? setSkuUniqueMessage("Product SKU must be unique. This already exists, try again with a new one") : window.location.href = '/';
+                console.log(response.data);
+            })
+         
+        } catch (error) {
+            console.log(error);
+            setErrorSaveProduct("Error save product");
+        }
+    }
 
 
     return (
@@ -87,7 +113,9 @@ export function AddProduct() {
             <main>
                 <form id="product_form" >
                     <div className='group-input'>
+                        <p>{errorSaveProduct}</p>
                         <p>{message}</p>
+                        <p>{skuUniqueMessage}</p>
                     </div>
                     <div className="group-input">
                         <div className='group'>
