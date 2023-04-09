@@ -10,6 +10,8 @@ export function ListProducts() {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [errorLoading, setErrorLoading] = useState("");
   const [deleteProductError, setDeleteProductError] = useState("");
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -22,8 +24,7 @@ export function ListProducts() {
       }
     }
     fetchData();
-  }, []);
-
+  }, [deleteSuccess]);
 
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
@@ -56,22 +57,20 @@ export function ListProducts() {
     ));
   }
 
-  
-  
   async function handleDeleteMassCheckbox() {
-    //console.log("Selected products:", selectedProducts);
     for (const id of selectedProducts) {
       try {
         await axios.delete(`http://localhost:8000/deleteProduct/${id}`, {
           headers: {
             'Content-Type': 'application/json'
-        }
+          }
         });
         console.log(`Produto ${id} excluído com sucesso!`);
       } catch (error) {
         setDeleteProductError("Error deleting ids");
       }
     }
+    setDeleteSuccess(true);
   }
 
   return (
