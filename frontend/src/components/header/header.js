@@ -1,15 +1,9 @@
 import './header.scss';
 import { Link } from 'react-router-dom';
-export function Header({ title, value, context, isLink = true, isDelete = true }) {
 
-    function handleProductFormSubmit() {
-        return alert('Save product and redirect to product list');
-    }
+export function Header({ title, value, context, isLink = true, isDelete = true, handleSubmit }) {
 
-    function handleCancelProduct() {
-        return alert('Cancel product, no save and redirect to product list');
-    }
-
+  
     function handleDeleteMassCheckbox() {
         return alert('delete mass checkbox');
     }
@@ -25,12 +19,14 @@ export function Header({ title, value, context, isLink = true, isDelete = true }
                                 <Link to="/addProduct">{value}</Link>
                             </button>
                         ) : (
-                            <button onClick={handleProductFormSubmit}>{value}</button>
+                            <button onClick={handleSubmit} >{value}</button>
                         )}
                         {isDelete ? (
                             <button id='delete-product-btn' onClick={handleDeleteMassCheckbox}>{context}</button>
                         ) : (
-                            <button onClick={handleCancelProduct}>{context}</button>
+                            <button>
+                                <Link to="/">{context}</Link>
+                            </button>
                         )}
                     </div>
                 </div>
