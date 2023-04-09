@@ -56,7 +56,7 @@ export function AddProduct() {
         }
         const fields = {
             sku: { validation: /^[A-Za-z0-9-]*$/, message: messageDisplay, setter: setSkuMessage, value: sku },
-            name: { validation: /^[A-Za-z0-9áéíóúâêîôûàèìòùãõç\s\-]*$/, message: messageDisplay, setter: setNameMessage, value: name },
+            name: { validation: /^[A-Za-z0-9áéíóúâêîôûàèìòùãõç\s-]*$/, message: messageDisplay, setter: setNameMessage, value: name },
             price: { validation: /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/, message: messageDisplay, setter: setPriceMessage, value: price },
             weight: { validation: selectedOption === "book" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setWeightMessage, value: weight },
             size: { validation: selectedOption === "dvd" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setSizeMessage, value: size },
