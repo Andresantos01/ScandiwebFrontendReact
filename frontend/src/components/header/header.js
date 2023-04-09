@@ -1,12 +1,7 @@
 import './header.scss';
 import { Link } from 'react-router-dom';
 
-export function Header({ title, value, context, isLink = true, isDelete = true, handleSubmit }) {
-
-  
-    function handleDeleteMassCheckbox() {
-        return alert('delete mass checkbox');
-    }
+export function Header({ title, value, context, isLink = true, isDelete = true, handleSubmit, handleDelete }) {
 
     return (
         <>
@@ -16,13 +11,13 @@ export function Header({ title, value, context, isLink = true, isDelete = true, 
                     <div className="buttons-wrapper">
                         {isLink ? (
                             <button>
-                                <Link to="/addProduct">{value}</Link>
+                                <Link to="/addproduct">{value}</Link>
                             </button>
                         ) : (
                             <button onClick={handleSubmit} >{value}</button>
                         )}
                         {isDelete ? (
-                            <button id='delete-product-btn' onClick={handleDeleteMassCheckbox}>{context}</button>
+                            <button id='delete-product-btn' onClick={handleDelete}>{context}</button>
                         ) : (
                             <button>
                                 <Link to="/">{context}</Link>

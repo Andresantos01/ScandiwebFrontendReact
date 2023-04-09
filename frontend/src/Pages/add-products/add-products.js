@@ -2,6 +2,8 @@ import './add-product.scss';
 import { Footer } from "../../components/footer/footer";
 import { Header } from "../../components/header/header";
 import React, { useState } from "react";
+import axios from "axios";
+
 export function AddProduct() {
 
     const [selectedOption, setSelectedOption] = useState("");
@@ -46,7 +48,7 @@ export function AddProduct() {
         }
     };
 
-    function handleSubmit(event) {
+    function handleSubmitForm(event) {
         event.preventDefault();
         const messageDisplay = "Please, provide the data of indicated type";
 
@@ -72,29 +74,16 @@ export function AddProduct() {
             }
         }
 
-        switch(selectedOption)
-        {
-            case "book":
-                console.log([sku, name, price, selectedOption, `${weight} Kg`]);
-                break;
-            case "dvd":
-                console.log([sku, name, price, selectedOption,`${size} MB`, ]);
-                break;
-            case "furniture":
-                console.log([sku, name, price, selectedOption, `${height}x${width}x${length}`]);
-                break;
-            default:
-                break;
-        }
 
-       // console.log([sku, name, price, selectedOption, size, weight, height, width, length]);
+
+        // console.log([sku, name, price, selectedOption, size, weight, height, width, length]);
     }
 
 
 
     return (
         <>
-            <Header title="Product Add" value="SAVE" context="CANCEL" isLink={false} isDelete={false} handleSubmit={handleSubmit} />
+            <Header title="Product Add" value="SAVE" context="CANCEL" isLink={false} isDelete={false} handleSubmit={handleSubmitForm} />
             <main>
                 <form id="product_form" >
                     <div className='group-input'>

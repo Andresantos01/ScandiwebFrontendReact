@@ -3,6 +3,14 @@ main{
     width: 100%;
     min-height: calc(100vh - 230px);
     margin-bottom: 5%;
+    position: relative;
+        .loading{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            color: $bg-primary;
+            transform: translate(-50%, -50%);
+        }
         .cards-wrapper{
             max-width: 80%;
             margin: 0 8.5% 0 auto;
