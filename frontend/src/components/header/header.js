@@ -10,18 +10,22 @@ export function Header({ title, value, context, isLink = true, isDelete = true, 
                     <h1>{title}</h1>
                     <div className="buttons-wrapper">
                         {isLink ? (
+                            <Link to="/addproduct">
                             <button>
-                                <Link to="/addproduct">{value}</Link>
+                                {value}
                             </button>
+                            </Link>
                         ) : (
                             <button onClick={handleSubmit} >{value}</button>
                         )}
                         {isDelete ? (
                             <button onClick={handleDelete}>{context}</button>
                         ) : (
+                            <Link to="/">
                             <button>
-                                <Link to="/">{context}</Link>
+                               {context}
                             </button>
+                            </Link>
                         )}
                     </div>
                 </div>

@@ -15,7 +15,7 @@ export function ListProducts() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`https://scandiwebtestdevjr.herokuapp.com/listProducts`);
+        const response = await axios.get(`http://localhost:8000/listProducts`);
         const productsWithCheckboxState = response.data.reduce((acc, product) => {
           acc[product.id] = false; 
           return acc;
