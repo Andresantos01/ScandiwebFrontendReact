@@ -67,7 +67,7 @@ export function ListProducts() {
       if (checkedProducts.length === 0) {
         return;
       }
-      const deleteRequests = checkedProducts.map(([id]) => axios.delete(`https://scandiwebtestdevjr.herokuapp.com/deleteProduct/${id}`));
+      const deleteRequests = checkedProducts.map(([id]) => axios.delete(`http://localhost:8000/deleteProduct/${id}`));
       await Promise.all(deleteRequests);
       setDeleteSuccess(true);
     } catch (error) {
