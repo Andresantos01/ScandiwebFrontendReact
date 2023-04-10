@@ -15,7 +15,8 @@ export function ListProducts() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get('http://localhost:8000/listProducts');
+        
+        const response = await axios.get(`http://localhost:8000/listProducts?_=${Math.random()}`);
         setProducts(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -65,12 +66,14 @@ export function ListProducts() {
             'Content-Type': 'application/json'
           }
         });
+        setSelectedProducts([]);
+        setDeleteSuccess(true);
+        window.location.reload();
       } catch (error) {
         setDeleteProductError("Error deleting id");
       }
     }
-    setSelectedProducts([]);
-    setDeleteSuccess(true);
+ 
   }
 
   return (
