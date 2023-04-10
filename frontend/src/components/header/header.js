@@ -17,7 +17,7 @@ export function Header({ title, value, context, isLink = true, isDelete = true, 
                             <button onClick={handleSubmit} >{value}</button>
                         )}
                         {isDelete ? (
-                            <button id='delete-product-btn' onClick={handleDelete}>{context}</button>
+                            <button onClick={handleDelete}>{context}</button>
                         ) : (
                             <button>
                                 <Link to="/">{context}</Link>

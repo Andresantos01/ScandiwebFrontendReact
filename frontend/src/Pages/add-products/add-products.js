@@ -18,7 +18,7 @@ export function AddProduct() {
     const [weightValue, setWeightValue] = useState("");
     const [heightValue, setHeightValue] = useState("");
     const [widthValue, setWidthValue] = useState("");
-    const [lengthValue, setLengthValue] = useState("");
+    const [lenghtValue, setLenghtValue] = useState("");
     const [message, setMessage] = useState("");
 
     const [skuValidationMessage, setSkuValidationMessage] = useState("");
@@ -28,7 +28,7 @@ export function AddProduct() {
     const [weightValidationMessage, setWeightValidationMessage] = useState("");
     const [heightValidationMessage, setHeightValidationMessage] = useState("");
     const [widthValidationMessage, setWidthValidationMessage] = useState("");
-    const [lengthValidationMessage, setLengthValidationMessage] = useState("");
+    const [lenghtValidationMessage, setLenghtValidationMessage] = useState("");
     const [skuUniqueValidationMessage, setSkuUniqueValidationMessage] = useState("");
     const [saveProductError, setSaveProductError] = useState("");
 
@@ -66,7 +66,7 @@ export function AddProduct() {
             size: { validation: selectedType === "dvd" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setSizeValidationMessage, value: sizeValue },
             height: { validation: selectedType === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setHeightValidationMessage, value: heightValue },
             width: { validation: selectedType === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setWidthValidationMessage, value: widthValue },
-            length: { validation: selectedType === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setLengthValidationMessage, value: lengthValue },
+            length: { validation: selectedType === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setLenghtValidationMessage, value: lenghtValue },
         };
 
         for (const [, { validation, message, setter, value }] of Object.entries(fields)) {
@@ -85,7 +85,7 @@ export function AddProduct() {
             const modifiedProduct = {
                 weight: `${weightValue} Kg`,
                 size: ` ${sizeValue} MB`,
-                dimension: `${heightValue}x${widthValue}x${lengthValue}`
+                dimension: `${heightValue}x${widthValue}x${lenghtValue}`
             }
             await axios.post(`https://scandiwebtestdevjr.herokuapp.com/addProduct`, {
                 sku: sku,
@@ -107,7 +107,7 @@ export function AddProduct() {
 
     return (
         <>
-            <Header title="Product Add" value="SAVE" context="CANCEL" isLink={false} isDelete={false} handleSubmit={handleSubmitForm} />
+            <Header title="Product Add" value="Save" context="Cancel" isLink={false} isDelete={false} handleSubmit={handleSubmitForm} />
             <main>
                 <form id="product_form" >
                     <div className='group-input'>
@@ -146,8 +146,8 @@ export function AddProduct() {
                         <div className='group'>
                             <label htmlFor="productType">Type Switcher</label>
                             <select id="productType" value={selectedType} onChange={handleSelectType}>
-                                <option value="">Type Switcher</option>
-                                <option value="dvd">DVD-disc</option>
+                                <option value=""></option>
+                                <option value="dvd">DVD</option>
                                 <option value="book">Book</option>
                                 <option value="furniture">Furniture</option>
                             </select>
@@ -208,11 +208,11 @@ export function AddProduct() {
                                 </div>
                                 <div className="group-input">
                                     <div className='group'>
-                                        <label htmlFor="length">Length (cm)</label>
-                                        <input type="number" min="1" id="length" value={lengthValue} name="length" onChange={(e) => setLengthValue(e.target.value)} required />
+                                        <label htmlFor="lenght">Length (cm)</label>
+                                        <input type="number" min="1" id="lenght" value={lenghtValue} name="length" onChange={(e) => setLenghtValue(e.target.value)} required />
                                     </div>
                                     <div className='messages'>
-                                        <span>{lengthValidationMessage}</span>
+                                        <span>{lenghtValidationMessage}</span>
                                     </div>
                                 </div>
                             </div>
