@@ -11,11 +11,11 @@ export function ListProducts() {
   const [selectedProducts, setSelectedProducts] = useState({});
   const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [deleteProductError, setDeleteProductError] = useState(null);
-  //const [isCheckboxSelected, setIsCheckboxSelected] = useState(true);
+ 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`http://localhost:8000/listProducts`);
+        const response = await axios.get(`https://scandiwebtestdevjr.herokuapp.com/listProducts`);
         const productsWithCheckboxState = response.data.reduce((acc, product) => {
           acc[product.id] = false; 
           return acc;
@@ -67,7 +67,7 @@ export function ListProducts() {
       if (checkedProducts.length === 0) {
         return;
       }
-      const deleteRequests = checkedProducts.map(([id]) => axios.delete(`http://localhost:8000/deleteProduct/${id}`));
+      const deleteRequests = checkedProducts.map(([id]) => axios.delete(`https://scandiwebtestdevjr.herokuapp.com/deleteProduct/${id}`));
       await Promise.all(deleteRequests);
       setDeleteSuccess(true);
     } catch (error) {

@@ -87,7 +87,7 @@ export function AddProduct() {
                 size: ` ${sizeValue} MB`,
                 dimension: `${heightValue}x${widthValue}x${lengthValue}`
             }
-            await axios.post(`http://localhost:8000/addProduct`, {
+            await axios.post(`https://scandiwebtestdevjr.herokuapp.com/addProduct`, {
                 sku: sku,
                 name: name,
                 price: price,
