@@ -6,14 +6,13 @@ import axios from "axios";
 
 export function AddProduct() {
 
-    const [selectedOption, setSelectedOption] = useState("");
+    const [selectedType, setSelectedType] = useState("");
     const [showSizeField, setShowSizeField] = useState(false);
     const [showWeightField, setShowWeightField] = useState(false);
     const [showFurnitureFields, setShowFurnitureFields] = useState(false);
 
-
     const [sku, setSku] = useState("");
-    const [name, setName] = useState("");
+    const [name, setName] = useState("");   
     const [price, setPrice] = useState("");
     const [size, setSize] = useState("");
     const [weight, setWeight] = useState("");
@@ -32,8 +31,9 @@ export function AddProduct() {
     const [lengthMessage, setLengthMessage] = useState("");
     const [errorSaveProduct, setErrorSaveProduct] = useState("");
     const [skuUniqueMessage, setSkuUniqueMessage] = useState("");
+
     const handleSelectOption = (event) => {
-        setSelectedOption(event.target.value);
+        setSelectedType(event.target.value);
         if (event.target.value === "dvd") {
             setShowSizeField(true);
             setShowWeightField(false);
@@ -54,7 +54,7 @@ export function AddProduct() {
         event.preventDefault();
         const messageDisplay = "Please, provide the data of indicated type";
 
-        if (sku === "" || name === "" || price === "" || selectedOption === "") {
+        if (sku === "" || name === "" || price === "" || selectedType === "") {
             setMessage("Please, submit required data");
             return;
         }
@@ -62,11 +62,11 @@ export function AddProduct() {
             sku: { validation: /^[A-Za-z0-9-]*$/, message: messageDisplay, setter: setSkuMessage, value: sku },
             name: { validation: /^[A-Za-z0-9áéíóúâêîôûàèìòùãõç\s-]*$/, message: messageDisplay, setter: setNameMessage, value: name },
             price: { validation: /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/, message: messageDisplay, setter: setPriceMessage, value: price },
-            weight: { validation: selectedOption === "book" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setWeightMessage, value: weight },
-            size: { validation: selectedOption === "dvd" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setSizeMessage, value: size },
-            height: { validation: selectedOption === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setHeightMessage, value: height },
-            width: { validation: selectedOption === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setWidthMessage, value: width },
-            length: { validation: selectedOption === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setLengthMessage, value: length },
+            weight: { validation: selectedType === "book" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setWeightMessage, value: weight },
+            size: { validation: selectedType === "dvd" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setSizeMessage, value: size },
+            height: { validation: selectedType === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setHeightMessage, value: height },
+            width: { validation: selectedType === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setWidthMessage, value: width },
+            length: { validation: selectedType === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setLengthMessage, value: length },
         };
 
         for (const [, { validation, message, setter, value }] of Object.entries(fields)) {
@@ -91,10 +91,10 @@ export function AddProduct() {
                 sku: sku,
                 name: name,
                 price: price,
-                type: selectedOption,
-                ...(selectedOption === 'book' && { weight: modifiedProduct.weight }),
-                ...(selectedOption === 'dvd' && { size: modifiedProduct.size }),
-                ...(selectedOption === 'furniture' && { dimension: modifiedProduct.dimension })
+                type: selectedType,
+                ...(selectedType === 'book' && { weight: modifiedProduct.weight }),
+                ...(selectedType === 'dvd' && { size: modifiedProduct.size }),
+                ...(selectedType === 'furniture' && { dimension: modifiedProduct.dimension })
             }).then(response => {
                 response.data.error_message ? setSkuUniqueMessage("Product SKU must be unique. This already exists, try again with a new one") : window.location.href = '/';
                 console.log(response.data);
@@ -147,7 +147,7 @@ export function AddProduct() {
                     <div className="group-input">
                         <div className='group'>
                             <label htmlFor="productType">Type Switcher</label>
-                            <select id="productType" value={selectedOption} onChange={handleSelectOption}>
+                            <select id="productType" value={selectedType} onChange={handleSelectOption}>
                                 <option value="">Type Switcher</option>
                                 <option value="dvd">DVD-disc</option>
                                 <option value="book">Book</option>
