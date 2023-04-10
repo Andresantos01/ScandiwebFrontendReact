@@ -14,25 +14,25 @@ export function AddProduct() {
     const [sku, setSku] = useState("");
     const [name, setName] = useState("");   
     const [price, setPrice] = useState("");
-    const [size, setSize] = useState("");
-    const [weight, setWeight] = useState("");
-    const [height, setHeight] = useState("");
-    const [width, setWidth] = useState("");
-    const [length, setLength] = useState("");
+    const [sizeValue, setSizeValue] = useState("");
+    const [weightValue, setWeightValue] = useState("");
+    const [heightValue, setHeightValue] = useState("");
+    const [widthValue, setWidthValue] = useState("");
+    const [lengthValue, setLengthValue] = useState("");
     const [message, setMessage] = useState("");
 
-    const [skuMessage, setSkuMessage] = useState("");
-    const [nameMessage, setNameMessage] = useState("");
-    const [priceMessage, setPriceMessage] = useState("");
-    const [sizeMessage, setSizeMessage] = useState("");
-    const [weightMessage, setWeightMessage] = useState("");
-    const [heightMessage, setHeightMessage] = useState("");
-    const [widthMessage, setWidthMessage] = useState("");
-    const [lengthMessage, setLengthMessage] = useState("");
-    const [errorSaveProduct, setErrorSaveProduct] = useState("");
-    const [skuUniqueMessage, setSkuUniqueMessage] = useState("");
+    const [skuValidationMessage, setSkuValidationMessage] = useState("");
+    const [nameValidationMessage, setNameValidationMessage] = useState("");
+    const [priceValidationMessage, setPriceValidationMessage] = useState("");
+    const [sizeValidationMessage, setSizeValidationMessage] = useState("");
+    const [weightValidationMessage, setWeightValidationMessage] = useState("");
+    const [heightValidationMessage, setHeightValidationMessage] = useState("");
+    const [widthValidationMessage, setWidthValidationMessage] = useState("");
+    const [lengthValidationMessage, setLengthValidationMessage] = useState("");
+    const [skuUniqueValidationMessage, setSkuUniqueValidationMessage] = useState("");
+    const [saveProductError, setSaveProductError] = useState("");
 
-    const handleSelectOption = (event) => {
+    const handleSelectType = (event) => {
         setSelectedType(event.target.value);
         if (event.target.value === "dvd") {
             setShowSizeField(true);
@@ -59,14 +59,14 @@ export function AddProduct() {
             return;
         }
         const fields = {
-            sku: { validation: /^[A-Za-z0-9-]*$/, message: messageDisplay, setter: setSkuMessage, value: sku },
-            name: { validation: /^[A-Za-z0-9áéíóúâêîôûàèìòùãõç\s-]*$/, message: messageDisplay, setter: setNameMessage, value: name },
-            price: { validation: /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/, message: messageDisplay, setter: setPriceMessage, value: price },
-            weight: { validation: selectedType === "book" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setWeightMessage, value: weight },
-            size: { validation: selectedType === "dvd" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setSizeMessage, value: size },
-            height: { validation: selectedType === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setHeightMessage, value: height },
-            width: { validation: selectedType === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setWidthMessage, value: width },
-            length: { validation: selectedType === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setLengthMessage, value: length },
+            sku: { validation: /^[A-Za-z0-9-]*$/, message: messageDisplay, setter: setSkuValidationMessage, value: sku },
+            name: { validation: /^[A-Za-z0-9áéíóúâêîôûàèìòùãõç\s-]*$/, message: messageDisplay, setter: setNameValidationMessage, value: name },
+            price: { validation: /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/, message: messageDisplay, setter: setPriceValidationMessage, value: price },
+            weight: { validation: selectedType === "book" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setWeightValidationMessage, value: weightValue },
+            size: { validation: selectedType === "dvd" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setSizeValidationMessage, value: sizeValue },
+            height: { validation: selectedType === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setHeightValidationMessage, value: heightValue },
+            width: { validation: selectedType === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setWidthValidationMessage, value: widthValue },
+            length: { validation: selectedType === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setLengthValidationMessage, value: lengthValue },
         };
 
         for (const [, { validation, message, setter, value }] of Object.entries(fields)) {
@@ -83,9 +83,9 @@ export function AddProduct() {
     async function handleSaveProduct() {
         try {
             const modifiedProduct = {
-                weight: `${weight} Kg`,
-                size: ` ${size} MB`,
-                dimension: `${height}x${width}x${length}`
+                weight: `${weightValue} Kg`,
+                size: ` ${sizeValue} MB`,
+                dimension: `${heightValue}x${widthValue}x${lengthValue}`
             }
             await axios.post(`http://localhost:8000/addProduct`, {
                 sku: sku,
@@ -96,13 +96,11 @@ export function AddProduct() {
                 ...(selectedType === 'dvd' && { size: modifiedProduct.size }),
                 ...(selectedType === 'furniture' && { dimension: modifiedProduct.dimension })
             }).then(response => {
-                response.data.error_message ? setSkuUniqueMessage("Product SKU must be unique. This already exists, try again with a new one") : window.location.href = '/';
-                console.log(response.data);
+                response.data.error_message ? setSkuUniqueValidationMessage("Product SKU must be unique. This already exists, try again with a new one") : window.location.href = '/';
             })
          
         } catch (error) {
-            console.log(error);
-            setErrorSaveProduct("Error save product");
+            setSaveProductError("Error save product");
         }
     }
 
@@ -113,9 +111,9 @@ export function AddProduct() {
             <main>
                 <form id="product_form" >
                     <div className='group-input'>
-                        <p>{errorSaveProduct}</p>
+                        <p>{saveProductError}</p>
                         <p>{message}</p>
-                        <p>{skuUniqueMessage}</p>
+                        <p>{skuUniqueValidationMessage}</p>
                     </div>
                     <div className="group-input">
                         <div className='group'>
@@ -123,7 +121,7 @@ export function AddProduct() {
                             <input type="text" id="sku" value={sku} name="sku" onChange={(e) => setSku(e.target.value)} required />
                         </div>
                         <div className='messages'>
-                            <span>{skuMessage}</span>
+                            <span>{skuValidationMessage}</span>
                         </div>
                     </div>
                     <div className="group-input">
@@ -132,7 +130,7 @@ export function AddProduct() {
                             <input type="text" id="name" value={name} name="name" onChange={(e) => setName(e.target.value)} required />
                         </div>
                         <div className='messages'>
-                            <span>{nameMessage}</span>
+                            <span>{nameValidationMessage}</span>
                         </div>
                     </div>
                     <div className="group-input">
@@ -141,13 +139,13 @@ export function AddProduct() {
                             <input type="number" min="1" value={price} id="price" name="price" onChange={(e) => setPrice(e.target.value)} required />
                         </div>
                         <div className='messages'>
-                            <span>{priceMessage}</span>
+                            <span>{priceValidationMessage}</span>
                         </div>
                     </div>
                     <div className="group-input">
                         <div className='group'>
                             <label htmlFor="productType">Type Switcher</label>
-                            <select id="productType" value={selectedType} onChange={handleSelectOption}>
+                            <select id="productType" value={selectedType} onChange={handleSelectType}>
                                 <option value="">Type Switcher</option>
                                 <option value="dvd">DVD-disc</option>
                                 <option value="book">Book</option>
@@ -160,10 +158,10 @@ export function AddProduct() {
                             <div className="group-input">
                                 <div className='group'>
                                     <label htmlFor="size">Size (MB)</label>
-                                    <input type="number" min="1" id="size" value={size} name="size" onChange={(e) => setSize(e.target.value)} required />
+                                    <input type="number" min="1" id="size" value={sizeValue} name="size" onChange={(e) => setSizeValue(e.target.value)} required />
                                 </div>
                                 <div className='messages'>
-                                    <span>{sizeMessage}</span>
+                                    <span>{sizeValidationMessage}</span>
                                 </div>
                             </div>
                             <div className="group-input">
@@ -176,10 +174,10 @@ export function AddProduct() {
                             <div className="group-input">
                                 <div className='group'>
                                     <label htmlFor="weight">Weight (kg)</label>
-                                    <input type="number" min="1" id="weight" value={weight} name="weight" onChange={(e) => setWeight(e.target.value)} required />
+                                    <input type="number" min="1" id="weight" value={weightValue} name="weight" onChange={(e) => setWeightValue(e.target.value)} required />
                                 </div>
                                 <div className='messages'>
-                                    <span>{weightMessage}</span>
+                                    <span>{weightValidationMessage}</span>
                                 </div>
                             </div>
                             <div className="group-input">
@@ -193,28 +191,28 @@ export function AddProduct() {
                                 <div className="group-input">
                                     <div className='group'>
                                         <label htmlFor="height">Height (cm)</label>
-                                        <input type="number" min="1" id="height" value={height} name="height" onChange={(e) => setHeight(e.target.value)} required />
+                                        <input type="number" min="1" id="height" value={heightValue} name="height" onChange={(e) => setHeightValue(e.target.value)} required />
                                     </div>
                                     <div className='messages'>
-                                        <span>{heightMessage}</span>
+                                        <span>{heightValidationMessage}</span>
                                     </div>
                                 </div>
                                 <div className="group-input">
                                     <div className='group'>
                                         <label htmlFor="width">Width (cm)</label>
-                                        <input type="number" min="1" id="width" value={width} name="width" onChange={(e) => setWidth(e.target.value)} required />
+                                        <input type="number" min="1" id="width" value={widthValue} name="width" onChange={(e) => setWidthValue(e.target.value)} required />
                                     </div>
                                     <div className='messages'>
-                                        <span>{widthMessage}</span>
+                                        <span>{widthValidationMessage}</span>
                                     </div>
                                 </div>
                                 <div className="group-input">
                                     <div className='group'>
                                         <label htmlFor="length">Length (cm)</label>
-                                        <input type="number" min="1" id="length" value={length} name="length" onChange={(e) => setLength(e.target.value)} required />
+                                        <input type="number" min="1" id="length" value={lengthValue} name="length" onChange={(e) => setLengthValue(e.target.value)} required />
                                     </div>
                                     <div className='messages'>
-                                        <span>{lengthMessage}</span>
+                                        <span>{lengthValidationMessage}</span>
                                     </div>
                                 </div>
                             </div>
