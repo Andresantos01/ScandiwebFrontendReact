@@ -69,7 +69,7 @@ export function AddProduct() {
             length: { validation: selectedOption === "furniture" ? /^[1-9]\d*(\.[0-9]*[1-9])?$|^0\.[0-9]*[1-9]$/ : undefined, message: messageDisplay, setter: setLengthMessage, value: length },
         };
 
-        for (const [field, { validation, message, setter, value }] of Object.entries(fields)) {
+        for (const [, { validation, message, setter, value }] of Object.entries(fields)) {
             if (validation && !validation.test(value)) {
                 setter(message);
                 return;
@@ -149,7 +149,7 @@ export function AddProduct() {
                             <label htmlFor="productType">Type Switcher</label>
                             <select id="productType" value={selectedOption} onChange={handleSelectOption}>
                                 <option value="">Type Switcher</option>
-                                <option value="dvd">DVD</option>
+                                <option value="dvd">DVD-disc</option>
                                 <option value="book">Book</option>
                                 <option value="furniture">Furniture</option>
                             </select>
