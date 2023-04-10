@@ -1,7 +1,7 @@
 import './header.scss';
 import { Link } from 'react-router-dom';
 
-export function Header({ title, value, context, isLink = true, isDelete = true, handleSubmit, handleDele }) {
+export function Header({ title, value, context, isLink = true, isDelete = true, handleSubmit, handleDelete }) {
 
     return (
         <>
@@ -17,7 +17,7 @@ export function Header({ title, value, context, isLink = true, isDelete = true, 
                             <button onClick={handleSubmit} >{value}</button>
                         )}
                         {isDelete ? (
-                            <button id='delete-product-btn' onClick={handleDele}>{context}</button>
+                            <button id='delete-product-btn' onClick={handleDelete}>{context}</button>
                         ) : (
                             <button>
                                 <Link to="/">{context}</Link>
