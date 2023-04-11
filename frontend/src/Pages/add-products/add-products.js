@@ -87,7 +87,7 @@ export function AddProduct() {
                 size: ` ${sizeValue} MB`,
                 dimension: `${heightValue}x${widthValue}x${lenghtValue}`
             }
-            await axios.post(`http://localhost:8000/addProduct`, {
+            await axios.post(`https://scandiwebtestdevjr.herokuapp.com/addProduct`, {
                 sku: sku,
                 name: name,
                 price: price,
@@ -106,7 +106,7 @@ export function AddProduct() {
 
 
     return (
-        <>
+        <body>
             <Header title="Product Add" value="Save" context="Cancel" isLink={false} isDelete={false} handleSubmit={handleSubmitForm} />
             <main>
                 <form id="product_form" >
@@ -208,8 +208,8 @@ export function AddProduct() {
                                 </div>
                                 <div className="group-input">
                                     <div className='group'>
-                                        <label htmlFor="lenght">Length (cm)</label>
-                                        <input type="number" min="1" id="lenght" value={lenghtValue} name="length" onChange={(e) => setLenghtValue(e.target.value)} required />
+                                        <label htmlFor="length">Length (cm)</label>
+                                        <input type="number" min="1" id="length" value={lenghtValue} name="length" onChange={(e) => setLenghtValue(e.target.value)} required />
                                     </div>
                                     <div className='messages'>
                                         <span>{lenghtValidationMessage}</span>
@@ -225,6 +225,6 @@ export function AddProduct() {
                 </form>
             </main>
             <Footer context="Scandiweb Test assignment" />
-        </>
+        </body>
     )
 }

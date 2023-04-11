@@ -30,6 +30,6 @@ export function Header({ title, value, context, isLink = true, isDelete = true, 
                     </div>
                 </div>
             </header>
-        </>
+            </>
     )
 }

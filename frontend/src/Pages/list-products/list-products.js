@@ -1,35 +1,43 @@
 import { useState, useEffect } from "react";
-import { Footer } from "../../components/footer/footer";
 import { Header } from "../../components/header/header";
 import './list-products.scss';
+import { Footer } from "../../components/footer/footer";
 import axios from 'axios';
 
 export function ListProducts() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorLoading, setErrorLoading] = useState(null);
-  const [selectedProducts, setSelectedProducts] = useState({});
+  const [selectedProducts, setSelectedProducts] = useState(null);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [deleteProductError, setDeleteProductError] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
  
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`http://localhost:8000/listProducts`);
-        const productsWithCheckboxState = response.data.reduce((acc, product) => {
-          acc[product.id] = false; 
-          return acc;
-        }, {});
+        const response = await axios.get(`https://scandiwebtestdevjr.herokuapp.com/listProducts`);
         setProducts(response.data);
-        setSelectedProducts(productsWithCheckboxState);
         setIsLoading(false);
       } catch (error) {
         setErrorLoading('error loading product list');
         setIsLoading(false);
       }
     }
+
+    if (selectedProducts === null) {
+      const initialState = products.reduce((acc, product) => {
+        acc[product.id] = false;
+        return acc;
+      }, {});
+      setSelectedProducts(initialState);
+    } else if (deleteSuccess && !isDeleting) {
+      fetchData();
+      setDeleteSuccess(false);
+    }
+    
     fetchData();
-  }, [deleteSuccess]);
+  }, [deleteSuccess, isDeleting, selectedProducts]);
 
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
@@ -63,19 +71,22 @@ export function ListProducts() {
 
   async function handleDeleteMassCheckbox() {
     try {
+      setIsDeleting(true);
       const checkedProducts = Object.entries(selectedProducts).filter(([id, isChecked]) => isChecked);
       if (checkedProducts.length === 0) {
         return;
       }
-      const deleteRequests = checkedProducts.map(([id]) => axios.delete(`http://localhost:8000/deleteProduct/${id}`));
+      const deleteRequests = checkedProducts.map(([id]) => axios.delete(`https://scandiwebtestdevjr.herokuapp.com/deleteProduct/${id}`));
       await Promise.all(deleteRequests);
-      setDeleteSuccess(true);
+      setTimeout(() => setDeleteSuccess(true), 1000);
     } catch (error) {
       setDeleteProductError("Error deleting id");
+    } finally {
+      setIsDeleting(false);
     }
   }
   return (
-    <>
+    <body>
       <Header title="Product List" value="ADD" context="MASS DELETE" handleDelete={handleDeleteMassCheckbox}  />
       <main>
         {
@@ -92,6 +103,6 @@ export function ListProducts() {
         )}
       </main>
       <Footer context="Scandiweb Test assignment" />
-    </>
+    </body>
   )
 }
